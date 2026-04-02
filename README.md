@@ -68,8 +68,8 @@ This will:
    
    # Install dependencies (try standard names first)
    sudo apt install cmake extra-cmake-modules qt5-base-dev qt5-declarative-dev \
-     libkf5plasma-dev libkf5globalaccel-dev libkf5i18n-dev alsa-utils sox ffmpeg \
-     python3-tk pipx wget unzip
+     libkf5plasma-dev libkf5globalaccel-dev libkf5i18n-dev plasma-framework plasma-workspace \
+     alsa-utils sox ffmpeg python3-tk pipx wget unzip
    
    # If qt5-base-dev is not found, try alternative names:
    # sudo apt install cmake extra-cmake-modules qtbase5-dev qtdeclarative5-dev \

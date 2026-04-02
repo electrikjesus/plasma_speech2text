@@ -38,6 +38,7 @@ if command -v apt >/dev/null 2>&1; then
         libkf5plasma-dev libkf5globalaccel-dev libkf5i18n-dev \
         libkf5kdelibs4support-dev \
         plasma-framework \
+        plasma-workspace \
         alsa-utils sox ffmpeg \
         python3-tk \
         pipx wget unzip \
@@ -52,6 +53,7 @@ if command -v apt >/dev/null 2>&1; then
             libkf5plasma-dev libkf5globalaccel-dev libkf5i18n-dev \
             libkf5kdelibs4support-dev \
             plasma-framework \
+            plasma-workspace \
             alsa-utils sox ffmpeg \
             python3-tk \
             pipx wget unzip \
@@ -65,6 +67,7 @@ elif command -v dnf >/dev/null 2>&1; then
         kf5-plasma-devel kf5-kglobalaccel-devel kf5-ki18n-devel \
         kf5-kdelibs4support-devel \
         plasma-framework \
+        plasma-workspace \
         alsa-utils sox ffmpeg \
         python3-tk \
         pipx wget unzip \
