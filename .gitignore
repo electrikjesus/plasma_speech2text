@@ -1,0 +1,59 @@
+# Build directories
+/build/
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+CTestTestfile.cmake
+Makefile
+
+# Qt Creator user settings
+*.user
+*.pro.user
+*.pro.user.*
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Generated files
+*.o
+*.lo
+*.la
+*.a
+*.so
+*.dll
+*.dylib
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local user config + cache
+~/.config/s2tconfig
+~/.local/share/s2t/model/
+~/.local/bin/s2t-helper
+~/.local/lib/x86_64-linux-gnu/qt5/plugins/plasma/applets/s2t/
+
+# Plasma cache
+~/.cache/ksycoca*
+~/.config/kbuildsycoca*
+
+# Test outputs
+*.wav
+*.log
+
+# Avoid accidentally committing environment files
+.env
+.env.*
+
+# MacOS
+.DS_Store
+
+# Nonstrict path duplicates
+*.appimage

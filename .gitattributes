@@ -1,0 +1,7 @@
+* text=auto
+*.sh eol=lf
+*.cpp eol=lf
+*.h eol=lf
+*.qml eol=lf
+*.md text
+*.py text

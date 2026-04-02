@@ -1,0 +1,15 @@
+{
+  "KPlugin": {
+    "Name": "SpeechToTextInputMethod",
+    "Description": "Plasma widget addon: on-screen keyboard + speech-to-text bubble + CoPilot key mapping",
+    "Icon": "microphone",
+    "Author": "Auto-generated",
+    "Version": "0.1"
+  },
+  "ServiceTypes": ["Plasma/Applet"],
+  "X-KDE-PluginInfo-Name": "s2t",
+  "X-KDE-PluginInfo-Category": "System Tray",
+  "X-KDE-PluginInfo-Dependencies": "plasma-framework",
+  "X-KDE-PluginInfo-EnabledByDefault": false,
+  "X-KDE-PluginInfo-Location": "Panel"
+}
