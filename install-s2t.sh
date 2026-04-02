@@ -40,6 +40,7 @@ if command -v apt >/dev/null 2>&1; then
         plasma-framework \
         alsa-utils sox ffmpeg \
         python3-tk \
+        pipx wget unzip \
         kpackagetool5 2>&1 | tee /tmp/apt-install.log | grep -q "Unable to locate package"; then
         
         # Fallback: try with qtbase5-dev instead
@@ -53,6 +54,7 @@ if command -v apt >/dev/null 2>&1; then
             plasma-framework \
             alsa-utils sox ffmpeg \
             python3-tk \
+            pipx wget unzip \
             kpackagetool5
     fi
 elif command -v dnf >/dev/null 2>&1; then
@@ -65,6 +67,7 @@ elif command -v dnf >/dev/null 2>&1; then
         plasma-framework \
         alsa-utils sox ffmpeg \
         python3-tk \
+        pipx wget unzip \
         kpackage
 else
     echo "Unsupported package manager. Please install dependencies manually."
@@ -102,6 +105,35 @@ fi
 cp "$PROJECT_DIR/s2t-helper.sh" "$HELPER_SCRIPT"
 chmod +x "$HELPER_SCRIPT"
 
+# Setup Vosk STT engine
+echo ""
+echo "Setting up Vosk speech-to-text engine..."
+MODEL_DIR="$HOME/.local/share/s2t"
+MODEL_PATH="$MODEL_DIR/model"
+
+# Install Vosk via pipx if not present
+if ! command -v vosk-transcriber >/dev/null 2>&1; then
+    echo "Installing Vosk transcriber via pipx..."
+    pipx install vosk
+else
+    echo "Vosk transcriber already installed"
+fi
+
+# Download and setup Vosk model if not present
+if [ ! -d "$MODEL_PATH" ]; then
+    echo "Downloading Vosk English model (~40MB)..."
+    mkdir -p "$MODEL_DIR"
+    cd "$MODEL_DIR"
+    wget -q --show-progress https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip
+    echo "Extracting model..."
+    unzip -q vosk-model-small-en-us-0.15.zip
+    mv vosk-model-small-en-us-0.15 model
+    rm vosk-model-small-en-us-0.15.zip
+    echo "✓ Vosk model downloaded to: $MODEL_PATH"
+else
+    echo "✓ Vosk model already exists at: $MODEL_PATH"
+fi
+
 # Create config
 echo "Setting up configuration..."
 mkdir -p ~/.config
@@ -115,16 +147,22 @@ chmod +x "$PROJECT_DIR/test-s2t.sh"
 
 echo "Installation completed!"
 echo ""
-echo "To test:"
-echo "  $PROJECT_DIR/test-s2t.sh"
+echo "✓ Build system: KDE Plasma + Qt5"
+echo "✓ Speech engine: Vosk (offline, privacy-first)"
+echo "✓ Microphone: ALSA audio capture"
+echo "✓ Volume feedback: sox RMS measurement"
 echo ""
-echo "To add to Plasma panel:"
+echo "To test the STT pipeline:"
+echo "  python3 s2t-tester.py"
+echo ""
+echo "To add widget to Plasma panel:"
 echo "  Right-click panel -> Add Widgets -> SpeechToTextInputMethod"
 echo ""
-echo "To configure STT engine:"
-echo "  Edit ~/.config/s2tconfig"
+echo "Or enable in system tray:"
+echo "  System Settings -> Startup and Shutdown -> LowLevel System Tray"
 echo ""
-echo "Installed files:"
+echo "Installed locations:"
 echo "  Plasmoid: $PLASMOID_DIR"
-echo "  Helper: $HELPER_SCRIPT"
+echo "  Helper script: $HELPER_SCRIPT"
+echo "  Vosk model: $MODEL_PATH"
 echo "  Config: ~/.config/s2tconfig"

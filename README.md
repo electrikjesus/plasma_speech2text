@@ -50,10 +50,13 @@ Run the installer script:
 ```
 
 This will:
-- Install system dependencies
+- Install system dependencies (Qt5, KF5, ALSA, sox, ffmpeg, pipx)
 - Build the project
 - Install the plasmoid
-- Set up the helper script and configuration
+- Set up the helper script
+- **Install Vosk via pipx** (offline speech recognition)
+- **Download the Vosk English model** (~40MB)
+- Configure the system
 
 ### Manual Installation
 
@@ -65,11 +68,13 @@ This will:
    
    # Install dependencies (try standard names first)
    sudo apt install cmake extra-cmake-modules qt5-base-dev qt5-declarative-dev \
-     libkf5plasma-dev libkf5globalaccel-dev libkf5i18n-dev alsa-utils sox ffmpeg python3-tk
+     libkf5plasma-dev libkf5globalaccel-dev libkf5i18n-dev alsa-utils sox ffmpeg \
+     python3-tk pipx wget unzip
    
    # If qt5-base-dev is not found, try alternative names:
    # sudo apt install cmake extra-cmake-modules qtbase5-dev qtdeclarative5-dev \
-   #   libkf5plasma-dev libkf5globalaccel-dev libkf5i18n-dev alsa-utils sox ffmpeg python3-tk
+   #   libkf5plasma-dev libkf5globalaccel-dev libkf5i18n-dev alsa-utils sox ffmpeg \
+   #   python3-tk pipx wget unzip
    ```
 
 2. Build:
@@ -85,10 +90,25 @@ This will:
    # or for local install: cmake --install . --prefix ~/.local
    ```
 
-4. Set up config:
+4. Install Vosk STT engine:
+   ```bash
+   # Install Vosk transcriber
+   pipx install vosk
+   
+   # Download Vosk English model (~40MB)
+   mkdir -p ~/.local/share/s2t
+   cd ~/.local/share/s2t
+   wget https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip
+   unzip vosk-model-small-en-us-0.15.zip
+   mv vosk-model-small-en-us-0.15 model
+   rm vosk-model-small-en-us-0.15.zip
+   ```
+
+5. Set up config:
    ```bash
    mkdir -p ~/.config
-   echo "[SpeechToText]\nEngineCommand=./s2t-helper.sh" > ~/.config/s2tconfig
+   echo "[SpeechToText]
+EngineCommand=$HOME/.local/bin/s2t-helper" > ~/.config/s2tconfig
    ```
 
 ## Testing
