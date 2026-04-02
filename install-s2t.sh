@@ -30,24 +30,29 @@ if command -v apt >/dev/null 2>&1; then
     sudo apt update
     
     # Try standard Qt5 packages first
-    if ! sudo apt-get install -y \
+    echo "Attempting to install Qt5 packages (standard names)..."
+    if sudo apt-get install -y \
+        cmake \
         extra-cmake-modules \
         qt5-base-dev qt5-declarative-dev \
         libkf5plasma-dev libkf5globalaccel-dev libkf5i18n-dev \
         libkf5kdelibs4support-dev \
         plasma-framework \
         alsa-utils sox ffmpeg \
-        kpackagetool5 2>/dev/null; then
+        python3-tk \
+        kpackagetool5 2>&1 | tee /tmp/apt-install.log | grep -q "Unable to locate package"; then
         
         # Fallback: try with qtbase5-dev instead
-        echo "Standard Qt5 packages not found, trying alternative names..."
+        echo "Standard Qt5 packages not found, trying alternative names (qtbase5-dev, qtdeclarative5-dev)..."
         sudo apt install -y \
+            cmake \
             extra-cmake-modules \
             qtbase5-dev qtdeclarative5-dev \
             libkf5plasma-dev libkf5globalaccel-dev libkf5i18n-dev \
             libkf5kdelibs4support-dev \
             plasma-framework \
             alsa-utils sox ffmpeg \
+            python3-tk \
             kpackagetool5
     fi
 elif command -v dnf >/dev/null 2>&1; then
@@ -59,6 +64,7 @@ elif command -v dnf >/dev/null 2>&1; then
         kf5-kdelibs4support-devel \
         plasma-framework \
         alsa-utils sox ffmpeg \
+        python3-tk \
         kpackage
 else
     echo "Unsupported package manager. Please install dependencies manually."

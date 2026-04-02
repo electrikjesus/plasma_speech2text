@@ -19,11 +19,24 @@ This workspace contains a KDE Plasma applet skeleton that can display a speech-t
 - `s2t.cpp` - main plugin implementation
 
 ## Build dependencies
-Install KDE development dependencies before building:
+Install KDE development dependencies before building (Ubuntu 24.04):
 
 ```bash
-sudo apt install extra-cmake-modules qt5-base-dev qt5-declarative-dev \
-  libkf5plasma-dev libkf5globalaccel-dev libkf5i18n-dev alsa-utils sox ffmpeg
+# Enable universe repository first (required on some systems)
+sudo add-apt-repository -y universe
+sudo apt update
+
+# Install all required packages (including GUI tester dependencies)
+sudo apt install -y cmake extra-cmake-modules \
+  libkf5plasma-dev libkf5globalaccel-dev libkf5i18n-dev \
+  alsa-utils sox ffmpeg python3-tk
+
+# For Qt5: try one of these depending on your system
+# Option 1 (most common):
+sudo apt install -y qt5-base-dev qt5-declarative-dev
+
+# Option 2 (if Option 1 fails):
+# sudo apt install -y qtbase5-dev qtdeclarative5-dev
 ```
 
 ## Quick Install and Test
@@ -46,8 +59,17 @@ This will:
 
 1. Install dependencies (Ubuntu 24.04):
    ```bash
-   sudo apt install extra-cmake-modules qt5-base-dev qt5-declarative-dev \
-     libkf5plasma-dev libkf5globalaccel-dev libkf5i18n-dev alsa-utils sox ffmpeg
+   # First enable universe repository (needed on some Ubuntu installations)
+   sudo add-apt-repository universe
+   sudo apt update
+   
+   # Install dependencies (try standard names first)
+   sudo apt install cmake extra-cmake-modules qt5-base-dev qt5-declarative-dev \
+     libkf5plasma-dev libkf5globalaccel-dev libkf5i18n-dev alsa-utils sox ffmpeg python3-tk
+   
+   # If qt5-base-dev is not found, try alternative names:
+   # sudo apt install cmake extra-cmake-modules qtbase5-dev qtdeclarative5-dev \
+   #   libkf5plasma-dev libkf5globalaccel-dev libkf5i18n-dev alsa-utils sox ffmpeg python3-tk
    ```
 
 2. Build:
